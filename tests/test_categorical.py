@@ -67,13 +67,13 @@ class DigestCategoricalColumnsTest(unittest.TestCase):
 
 inputs_raw = [
     # Seen values
-    {"key": 1, "column1": "A", "column2": "X", "column3": "L"},
+    {"key": 1, "column1": "A", "column2": "X", "column3": "L", "column4": "O"},
     # Unseen values
-    {"key": 2, "column1": "B", "column2": "Y", "column3": "M"},
+    {"key": 2, "column1": "B", "column2": "Y", "column3": "M", "column4": "P"},
     # Mixed
-    {"key": 3, "column1": "C", "column2": "Z", "column3": "N"},
+    {"key": 3, "column1": "C", "column2": "Z", "column3": "N", "column4": "Q"},
     # Repeat Row
-    {"key": 4, "column1": "C", "column2": "Z", "column3": "N"},
+    {"key": 4, "column1": "C", "column2": "Z", "column3": "N", "column4": "Q"},
 ]
 
 cat_cols = ["column1", "column2", "column3"]
@@ -90,14 +90,16 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
     def test_use(self):
 
         expected = [
+            # fmt: off
             # Seen values
-            {"key": 1, "column1": 10, "column2": 2, "column3": None},
+            {"key": 1, "column1": 10, "column2": 2, "column3": None, "column4": "O"},
             # Unseen values
-            {"key": 2, "column1": None, "column2": None, "column3": None},
+            {"key": 2, "column1": None, "column2": None, "column3": None, "column4": "P"},
             # Mixed
-            {"key": 3, "column1": None, "column2": 3, "column3": None},
+            {"key": 3, "column1": None, "column2": 3, "column3": None, "column4": "Q"},
             # Repeat Row
-            {"key": 4, "column1": None, "column2": 3, "column3": None},
+            {"key": 4, "column1": None, "column2": 3, "column3": None, "column4": "Q"},
+            # fmt: on
         ]
 
         with TestPipeline() as p:
@@ -115,13 +117,13 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
 
         expected = [
             # Seen values
-            {"key": 1, "column1": 10, "column2": 2, "column3": 0},
+            {"key": 1, "column1": 10, "column2": 2, "column3": 0, "column4": "O"},
             # Unseen values
-            {"key": 2, "column1": 0, "column2": 0, "column3": 0},
+            {"key": 2, "column1": 0, "column2": 0, "column3": 0, "column4": "P"},
             # Mixed
-            {"key": 3, "column1": 0, "column2": 3, "column3": 0},
+            {"key": 3, "column1": 0, "column2": 3, "column3": 0, "column4": "Q"},
             # Repeat Row
-            {"key": 4, "column1": 0, "column2": 3, "column3": 0},
+            {"key": 4, "column1": 0, "column2": 3, "column3": 0, "column4": "Q"},
         ]
 
         with TestPipeline() as p:
@@ -177,13 +179,13 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
 
         expected = [
             # Seen values
-            {"key": 1, "column1": 10, "column2": 2, "column3": 1},
+            {"key": 1, "column1": 10, "column2": 2, "column3": 1, "column4": "O"},
             # Unseen values
-            {"key": 2, "column1": 12, "column2": 4, "column3": 2},
+            {"key": 2, "column1": 12, "column2": 4, "column3": 2, "column4": "P"},
             # Mixed
-            {"key": 3, "column1": 13, "column2": 3, "column3": 3},
+            {"key": 3, "column1": 13, "column2": 3, "column3": 3, "column4": "Q"},
             # Repeat Row
-            {"key": 4, "column1": 13, "column2": 3, "column3": 3},
+            {"key": 4, "column1": 13, "column2": 3, "column3": 3, "column4": "Q"},
         ]
 
         with TestPipeline() as p:
