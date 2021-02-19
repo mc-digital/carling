@@ -58,7 +58,7 @@ class TestPprintEqualTo(unittest.TestCase):
 
 DEEP_DIFF_EXPECTED_MESSAGE = """\n\n------------------------------------
 
-DeepDiff:
+DeepDiff (expected / actual):
 
 {'values_changed': {"root[0]['value'][0]": {'new_value': 7, 'old_value': 1},
                     "root[0]['value'][1]": {'new_value': 8, 'old_value': 2},
