@@ -61,8 +61,8 @@ class DigestCategoricalColumnsTest(unittest.TestCase):
         cat_cols = ["value1", "value2"]
 
         with TestPipeline() as p:
-            actual = p | beam.Create(inputs) | DigestCategoricalColumns(*cat_cols)
-            assert_that(actual, equal_to(expected))
+            actual = p | beam.Create(inputs) | DigestCategoricalColumns(cat_cols)
+            assert_that(actual, pprint_equal_to(expected, deepdiff=True))
 
 
 inputs_raw = [
@@ -84,6 +84,58 @@ existing_dict_rows_raw = [
     ("column2", "X", 2),
     ("column2", "Z", 3),
 ]
+
+
+class ReplaceCategoricalColumnsTest(unittest.TestCase):
+    def test_use(self):
+
+        expected = [
+            # Seen values
+            {"key": 1, "column1": 10, "column2": 2, "column3": None},
+            # Unseen values
+            {"key": 2, "column1": None, "column2": None, "column3": None},
+            # Mixed
+            {"key": 3, "column1": None, "column2": 3, "column3": None},
+            # Repeat Row
+            {"key": 4, "column1": None, "column2": 3, "column3": None},
+        ]
+
+        with TestPipeline() as p:
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(
+                existing_dict_rows_raw
+            )
+
+            inputs = p | "create inputs" >> beam.Create(inputs_raw)
+
+            actual = inputs | ReplaceCategoricalColumns(cat_cols, existing_dict_rows)
+
+            assert_that(actual, pprint_equal_to(expected, deepdiff=True))
+
+    def test_use_with_default_unseen(self):
+
+        expected = [
+            # Seen values
+            {"key": 1, "column1": 10, "column2": 2, "column3": 0},
+            # Unseen values
+            {"key": 2, "column1": 0, "column2": 0, "column3": 0},
+            # Mixed
+            {"key": 3, "column1": 0, "column2": 3, "column3": 0},
+            # Repeat Row
+            {"key": 4, "column1": 0, "column2": 3, "column3": 0},
+        ]
+
+        with TestPipeline() as p:
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(
+                existing_dict_rows_raw
+            )
+
+            inputs = p | "create inputs" >> beam.Create(inputs_raw)
+
+            actual = inputs | ReplaceCategoricalColumns(
+                cat_cols, existing_dict_rows, default_unseen=0
+            )
+
+            assert_that(actual, pprint_equal_to(expected, deepdiff=True))
 
 
 class DigestCategoricalColumnsExistingTest(unittest.TestCase):
@@ -117,7 +169,8 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
             )
 
             assert_that(
-                categorical_dicts, pprint_equal_to(expected),
+                categorical_dicts,
+                pprint_equal_to(expected),
             )
 
     def test_use(self):
@@ -144,10 +197,11 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
                 cat_cols, existing_dict_rows
             )
 
-            actual = inputs | ReplaceCategoricalColumns(categorical_dicts)
+            actual = inputs | ReplaceCategoricalColumns(cat_cols, categorical_dicts)
 
             assert_that(
-                actual, pprint_equal_to(expected),
+                actual,
+                pprint_equal_to(expected),
             )
 
 
