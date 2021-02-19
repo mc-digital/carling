@@ -154,13 +154,17 @@ def ReplaceCategoricalColumns(
         categorical_dict_rows
         | "index by column" >> beam.Map(lambda r: (r[0], (r[1], r[2])))
         | "group by column" >> beam.GroupByKey()
-        | "create dict per column" >> beam.Map(lambda r: (r[0], dict(r[1])))
+        | "create dict per column" >> beam.MapTuple(lambda k, v: (k, dict(v)))
     )
 
     def _process(row, d):
-        for col in cat_cols:
-            row[col] = d.get(col, {}).get(row[col], default_unseen)
-        return row
+        ret = {}
+        for col, val in row.items():
+            if col in cat_cols:
+                ret[col] = d.get(col, {}).get(val, default_unseen)
+            else:
+                ret[col] = val
+        return ret
 
     return inputs | beam.Map(
         _process,
