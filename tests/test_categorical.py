@@ -4,14 +4,9 @@ import unittest
 import apache_beam as beam
 from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
+from carling import (CreateCategoricalDicts, DigestCategoricalColumns,
+                     PairWithIndexNumber, ReplaceCategoricalColumns)
 from carling.test_utils import pprint_equal_to
-
-from carling import (
-    PairWithIndexNumber,
-    DigestCategoricalColumns,
-    CreateCategoricalDicts,
-    ReplaceCategoricalColumns,
-)
 
 
 class PairWithIndexNumberTest(unittest.TestCase):
@@ -85,6 +80,11 @@ existing_dict_rows_raw = [
     ("column2", "Z", 3),
 ]
 
+inputs_raw_nested = [
+    {"untouched": "untouched", "features": {"column1": "A"}},
+    {"untouched": "untouched", "features": {"column1": "B"}},
+]
+
 
 class ReplaceCategoricalColumnsTest(unittest.TestCase):
     def test_use(self):
@@ -135,6 +135,26 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
 
             actual = inputs | ReplaceCategoricalColumns(
                 cat_cols, existing_dict_rows, default_unseen=0
+            )
+
+            assert_that(actual, pprint_equal_to(expected, deepdiff=True))
+
+    def test_use_with_nesting(self):
+
+        expected = [
+            {"untouched": "untouched", "features": {"column1": 10}},
+            {"untouched": "untouched", "features": {"column1": None}},
+        ]
+
+        with TestPipeline() as p:
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(
+                existing_dict_rows_raw
+            )
+
+            inputs = p | "create inputs" >> beam.Create(inputs_raw_nested)
+
+            actual = inputs | ReplaceCategoricalColumns(
+                cat_cols, existing_dict_rows, features_key="features"
             )
 
             assert_that(actual, pprint_equal_to(expected, deepdiff=True))

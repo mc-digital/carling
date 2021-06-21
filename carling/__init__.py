@@ -1,4 +1,5 @@
-__version__ = "0.3.0"
+# isort: skip_file
+__version__ = "0.3.1"
 
 from .group import (
     UniqueOnly,
