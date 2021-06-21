@@ -159,31 +159,43 @@ def ReplaceCategoricalColumns(
         | "create dict per column" >> beam.MapTuple(lambda k, v: (k, dict(v)))
     )
 
-    def _process(row, d):
-        digested = {}
+    if features_key:
+        # Nesting -- process separately from row
+        def _process_nested(row, d):
+            digested = {}
 
-        if features_key:
-            # support for nesting
             features_items = row[features_key]
-        else:
-            # Otherwise, use full row (features are at top level)
-            features_items = row
 
-        for col, val in features_items.items():
-            if col in cat_cols:
-                digested[col] = d.get(col, {}).get(val, default_unseen)
-            else:
-                digested[col] = val
+            for col, val in features_items.items():
+                if col in cat_cols:
+                    digested[col] = d.get(col, {}).get(val, default_unseen)
+                else:
+                    digested[col] = val
 
-        # No need to re-nest digested values
-        if not features_key:
+            ret = deepcopy(row)
+            ret[features_key] = digested
+
+            return ret
+
+        return inputs | beam.Map(
+            _process_nested,
+            d=beam.pvalue.AsDict(categorical_mapping_dicts),
+        )
+
+    else:
+        # No nesting - use row in place
+        def _process(row, d):
+            digested = {}
+
+            for col, val in row.items():
+                if col in cat_cols:
+                    digested[col] = d.get(col, {}).get(val, default_unseen)
+                else:
+                    digested[col] = val
+
             return digested
 
-        ret = deepcopy(row)
-        ret[features_key] = digested
-        return ret
-
-    return inputs | beam.Map(
-        _process,
-        d=beam.pvalue.AsDict(categorical_mapping_dicts),
-    )
+        return inputs | beam.Map(
+            _process,
+            d=beam.pvalue.AsDict(categorical_mapping_dicts),
+        )
