@@ -4,8 +4,13 @@ import unittest
 import apache_beam as beam
 from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
-from carling import (CreateCategoricalDicts, DigestCategoricalColumns,
-                     PairWithIndexNumber, ReplaceCategoricalColumns)
+
+from carling import (
+    CreateCategoricalDicts,
+    DigestCategoricalColumns,
+    PairWithIndexNumber,
+    ReplaceCategoricalColumns,
+)
 from carling.test_utils import pprint_equal_to
 
 
@@ -103,9 +108,7 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            existing_dict_rows = p | "create existing dicts" >> beam.Create(
-                existing_dict_rows_raw
-            )
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(existing_dict_rows_raw)
 
             inputs = p | "create inputs" >> beam.Create(inputs_raw)
 
@@ -127,9 +130,7 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            existing_dict_rows = p | "create existing dicts" >> beam.Create(
-                existing_dict_rows_raw
-            )
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(existing_dict_rows_raw)
 
             inputs = p | "create inputs" >> beam.Create(inputs_raw)
 
@@ -147,9 +148,7 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            existing_dict_rows = p | "create existing dicts" >> beam.Create(
-                existing_dict_rows_raw
-            )
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(existing_dict_rows_raw)
 
             inputs = p | "create inputs" >> beam.Create(inputs_raw_nested)
 
@@ -180,15 +179,11 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            existing_dict_rows = p | "create existing dicts" >> beam.Create(
-                existing_dict_rows_raw
-            )
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(existing_dict_rows_raw)
 
             inputs = p | "create inputs" >> beam.Create(inputs_raw)
 
-            categorical_dicts = inputs | CreateCategoricalDicts(
-                cat_cols, existing_dict_rows
-            )
+            categorical_dicts = inputs | CreateCategoricalDicts(cat_cols, existing_dict_rows)
 
             assert_that(
                 categorical_dicts,
@@ -209,15 +204,11 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            existing_dict_rows = p | "create existing dicts" >> beam.Create(
-                existing_dict_rows_raw
-            )
+            existing_dict_rows = p | "create existing dicts" >> beam.Create(existing_dict_rows_raw)
 
             inputs = p | "create inputs" >> beam.Create(inputs_raw)
 
-            categorical_dicts = inputs | CreateCategoricalDicts(
-                cat_cols, existing_dict_rows
-            )
+            categorical_dicts = inputs | CreateCategoricalDicts(cat_cols, existing_dict_rows)
 
             actual = inputs | ReplaceCategoricalColumns(cat_cols, categorical_dicts)
 

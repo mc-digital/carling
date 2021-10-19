@@ -1,8 +1,3 @@
-"""
-Generic iter utils
-Author: Tsuyoki Kumazaki (tsuyoki@mcdigital.jp)
-"""
-
 import itertools
 
 

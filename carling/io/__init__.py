@@ -1,3 +1,6 @@
-#!/usr/bin/env python3
+from .avro_schema import generate_avro_schema_from_template, load_avro_schema
 
-from .avro_schema import load_avro_schema, generate_avro_schema_from_template
+__all__ = (
+    "generate_avro_schema_from_template",
+    "load_avro_schema",
+)

@@ -1,10 +1,10 @@
-from apache_beam.testing.util import BeamAssertException
 import pprint
+
+from apache_beam.testing.util import BeamAssertException
 from deepdiff import DeepDiff
 
 
 def format_msg(msg_parts):
-
     return "\n\n".join(
         [
             (
@@ -66,10 +66,7 @@ def pprint_equal_to(expected, deepdiff=False):
                     msg_parts.append(("Missing", expected_list))
 
                 if deepdiff:
-                    dds = []
-                    msg_parts.append(
-                        ("DeepDiff (expected / actual)", DeepDiff(expected, actual))
-                    )
+                    msg_parts.append(("DeepDiff (expected / actual)", DeepDiff(expected, actual)))
                 raise BeamAssertException(format_msg(msg_parts))
 
     return _equal

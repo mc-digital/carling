@@ -1,29 +1,20 @@
-"""
-Generic mapping transform utils
-
-Author: Tsuyoki Kumazaki (tsuyoki@mcdigital.jp)
-"""
-
 import json
 
 import apache_beam as beam
 
 
 def Label(**labels):
-    """Labels all elements.
-    """
+    """Labels all elements."""
     return "Label" >> beam.Map(lambda r: {**r, **labels})
 
 
 def Select(*keys):
-    """Removes all columns which are not specified in `*keys`.
-    """
+    """Removes all columns which are not specified in `*keys`."""
     return "Select" >> beam.Map(lambda r: {k: r[k] for k in keys})
 
 
 def Project(*keys):
-    """Transforms each element into a tuple of values of the specified columns.
-    """
+    """Transforms each element into a tuple of values of the specified columns."""
     return "Project" >> beam.Map(lambda r: tuple(r[k] for k in keys))
 
 
@@ -45,8 +36,7 @@ def _decimal_default_proc(obj):
 
 
 def Stringify():
-    """Transforms each element into its JSON representation.
-    """
+    """Transforms each element into its JSON representation."""
 
     def s(obj):
         return json.dumps(obj, default=_decimal_default_proc)
@@ -66,8 +56,7 @@ def IndexBySingle(key):
 
 
 def RenameFromTo(from_to_key_mapping):
-    """Rename columns according to `from_to_key_mapping`.
-    """
+    """Rename columns according to `from_to_key_mapping`."""
 
     def rename(row):
         res = dict(row)
@@ -81,8 +70,7 @@ def RenameFromTo(from_to_key_mapping):
 
 
 def Exclude(*keys):
-    """Removes all columns specified in `*keys`.
-    """
+    """Removes all columns specified in `*keys`."""
 
     def exclude(row):
         res = dict(row)

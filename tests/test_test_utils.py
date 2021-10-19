@@ -1,15 +1,9 @@
-"""
-Tests for test utils
-
-Author: Tsuyoki Kumazaki (tsuyoki@mcdigital.jp)
-"""
-
+import pprint
 import unittest
 
-from carling.test_utils import pprint_equal_to
-
 from apache_beam.testing.util import BeamAssertException
-import pprint
+
+from carling.test_utils import pprint_equal_to
 
 CORRECT_VALUE = [{"value": [1, 2, 3]}, {"value": [4, 5, 6]}]
 ERR_VALUE = [{"value": [7, 8, 9]}, {"value": [10, 11, 12]}]
@@ -80,6 +74,4 @@ class TestPprintEqualToDeepDiff(unittest.TestCase):
 
         except BeamAssertException as bae:
             self.maxDiff = None
-            self.assertEqual(
-                str(bae), EXPECTED_PPRINT_MESSAGE + DEEP_DIFF_EXPECTED_MESSAGE
-            )
+            self.assertEqual(str(bae), EXPECTED_PPRINT_MESSAGE + DEEP_DIFF_EXPECTED_MESSAGE)

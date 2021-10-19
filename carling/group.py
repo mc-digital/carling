@@ -1,21 +1,9 @@
-"""
-Generic grouping transform utils
-
-Author: Tsuyoki Kumazaki (tsuyoki@mcdigital.jp)
-"""
 from functools import reduce
 
 import apache_beam as beam
 
+from carling.iter_utils import is_none, is_some, take_as_singleton, take_top, unwrap_or_none
 from carling.mapping import IndexBy
-from carling.iter_utils import (
-    take_top,
-    is_none,
-    is_some,
-    unwrap,
-    unwrap_or_none,
-    take_as_singleton,
-)
 
 
 def _merge_two(x, y):
@@ -50,7 +38,6 @@ class UniqueKeyCombine(beam.PTransform):
 
 
 class UniqueOnly(beam.PTransform):
-
     """Produces elements that are the only elements per key after deduplication.
 
     Given a `PCollection` of `(K, V)`,
@@ -76,7 +63,6 @@ class UniqueOnly(beam.PTransform):
 
 
 class SingletonOnly(beam.PTransform):
-
     """Produces elements that are the only elements per key.
 
     Given a `PCollection` of `(K, V)`,
@@ -93,8 +79,7 @@ class SingletonOnly(beam.PTransform):
         return (
             pcoll
             | "Group" >> beam.GroupByKey()
-            | "Remove Non-singleton Elements"
-            >> beam.Map(lambda kv: take_as_singleton(kv[1]))
+            | "Remove Non-singleton Elements" >> beam.Map(lambda kv: take_as_singleton(kv[1]))
             | "Remove None" >> beam.Filter(lambda v: len(v) > 0)
             | "Unwrap Values" >> beam.Map(lambda v: v[0])
         )
@@ -115,7 +100,6 @@ class _IntersectionDoFn(beam.DoFn):
 
 
 class Intersection(beam.PTransform):
-
     """Produces the intersection of given `PCollection`s.
 
     Given a list of `PCollection`s,
@@ -152,7 +136,6 @@ class _FilterByKeyDoFn(beam.DoFn):
 
 
 class FilterByKey(beam.PTransform):
-
     """Filters elements by their keys.
 
     The constructor receives one or more `PCollection`s of `K`s,
@@ -179,8 +162,7 @@ class FilterByKey(beam.PTransform):
 
 @beam.ptransform_fn
 def FilterByKeyUsingSideInput(pcoll, lookup_entries, filter_key):
-    """
-    Filters a single collection by a single lookup collection, using a common key.
+    """Filters a single collection by a single lookup collection, using a common key.
 
     Given:
       - a `PCollection` (lookup_entries) of `(V)`, as a lookup collection
@@ -307,7 +289,6 @@ class _DifferencePerKeyDoFn(beam.DoFn):
 
 
 class DifferencePerKey(beam.PTransform):
-
     """Produces the difference per key between two `PCollection`s.
 
     Given two `PCollection`s of `V`,
@@ -351,20 +332,18 @@ def MaxSelectPerKey(pcoll, index_keys, sort_key_fn, reverse=False):
     return (
         pcoll
         | f"Index by {index_keys}" >> IndexBy(*index_keys)
-        | f"Top 1 per key"
-        >> beam.combiners.Top.PerKey(1, key=sort_key_fn, reverse=reverse)
+        | "Top 1 per key" >> beam.combiners.Top.PerKey(1, key=sort_key_fn, reverse=reverse)
         | "De-Index" >> beam.Map(lambda k_v: k_v[1][0])
     )
 
 
 @beam.ptransform_fn
 def PartitionRowsContainingNone(pcoll):
-    """
-    Emits two tagged pcollections:
+    """Emits two tagged pcollections:
 
-      - None: Default emitted collection.
-              Rows are guaranteed not to have any `None` values
-      - contains_none: At least one column in the row had a `None` value
+    - None: Default emitted collection.
+            Rows are guaranteed not to have any `None` values
+    - contains_none: At least one column in the row had a `None` value
     """
 
     def _separator(row):
