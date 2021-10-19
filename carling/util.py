@@ -1,14 +1,12 @@
-#!/usr/bin/env python3
-
-import logging
-import apache_beam as beam
 import datetime
 import decimal
 import json
+import logging
+
+import apache_beam as beam
 
 
 class LogSample(beam.PTransform):
-
     """Print items of the given `PCollection` to the log.
 
     `LogSample` prints the JSON representations of the input items
@@ -44,9 +42,7 @@ class LogSample(beam.PTransform):
                 )
 
         return (
-            pcoll
-            | beam.transforms.combiners.Sample.FixedSizeGlobally(self._n)
-            | beam.ParDo(log)
+            pcoll | beam.transforms.combiners.Sample.FixedSizeGlobally(self._n) | beam.ParDo(log)
         )
 
 
@@ -63,11 +59,7 @@ def ReifyMultiValueOption(pcoll, option, delimiter="|"):
       - PCollection of strings
 
     """
-    return (
-        pcoll
-        | beam.Create([""])
-        | beam.FlatMap(lambda _: option.get().split(delimiter))
-    )
+    return pcoll | beam.Create([""]) | beam.FlatMap(lambda _: option.get().split(delimiter))
 
 
 class MemoizedValueProviderWrapper:

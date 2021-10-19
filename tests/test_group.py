@@ -1,9 +1,3 @@
-"""
-Tests for generic transforms.
-
-Author: Tsuyoki Kumazaki (tsuyoki@mcdigital.jp)
-"""
-
 import logging
 import unittest
 
@@ -12,17 +6,16 @@ from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
 
 from carling import (
-    IndexBy,
-    UniqueOnly,
-    SingletonOnly,
-    Intersection,
+    DifferencePerKey,
     FilterByKey,
     FilterByKeyUsingSideInput,
-    DifferencePerKey,
+    IndexBy,
+    Intersection,
     MaxSelectPerKey,
     PartitionRowsContainingNone,
+    SingletonOnly,
+    UniqueOnly,
 )
-
 from carling.test_utils import pprint_equal_to
 
 
@@ -71,19 +64,19 @@ class IntersectionTest(unittest.TestCase):
     def test(self):
 
         input_left = [
-            {"value1": "AAA", "value2": "XXX"},
-            {"value1": "BBB", "value2": "YYY"},
-            {"value1": "001", "value2": "001"},
+            (("value1", "AAA"), ("value2", "XXX")),
+            (("value1", "BBB"), ("value2", "YYY")),
+            (("value1", "001"), ("value2", "001")),
         ]
 
         input_right = [
-            {"value1": "AAA", "value2": "XXX"},
-            {"value1": "CCC", "value2": "ZZZ"},
-            {"value1": "001", "value2": "002"},
+            (("value1", "AAA"), ("value2", "XXX")),
+            (("value1", "CCC"), ("value2", "ZZZ")),
+            (("value1", "001"), ("value2", "002")),
         ]
 
         expected = [
-            {"value1": "AAA", "value2": "XXX"},
+            (("value1", "AAA"), ("value2", "XXX")),
         ]
 
         with TestPipeline() as p:
@@ -157,20 +150,14 @@ class FilterByKeyUsingSideInputTest(unittest.TestCase):
         with TestPipeline() as p:
             inputs_coll = p | "create inputs coll" >> beam.Create(inputs)
             filter_coll = p | "create filter coll" >> beam.Create(filter_table)
-            a_filtered = inputs_coll | "filter a" >> FilterByKeyUsingSideInput(
-                filter_coll, "a"
-            )
-            b_filtered = inputs_coll | "filter b" >> FilterByKeyUsingSideInput(
-                filter_coll, "b"
-            )
+            a_filtered = inputs_coll | "filter a" >> FilterByKeyUsingSideInput(filter_coll, "a")
+            b_filtered = inputs_coll | "filter b" >> FilterByKeyUsingSideInput(filter_coll, "b")
             assert_that(a_filtered, equal_to(a_expected), label="a check")
             assert_that(b_filtered, equal_to(b_expected), label="b check")
 
 
 class DifferencePerKeyTest(unittest.TestCase):
-    def _check(
-        self, left_inputs, right_inputs, expected, keys=["key"], columns=["value"]
-    ):
+    def _check(self, left_inputs, right_inputs, expected, keys=["key"], columns=["value"]):
 
         excluded = ["detail"]
 
@@ -181,11 +168,7 @@ class DifferencePerKeyTest(unittest.TestCase):
         with TestPipeline() as p:
             left = p | "create left" >> beam.Create(left_inputs)
             right = p | "create right" >> beam.Create(right_inputs)
-            actual = (
-                (left, right)
-                | DifferencePerKey(keys, columns)
-                | beam.Map(filter_extra_info)
-            )
+            actual = (left, right) | DifferencePerKey(keys, columns) | beam.Map(filter_extra_info)
             assert_that(actual, pprint_equal_to(expected))
 
     def test_plain_diff(self):
@@ -449,15 +432,9 @@ class PartitionRowsContainingNoneTest(unittest.TestCase):
         ]
 
         with TestPipeline() as p:
-            actual = (
-                p
-                | "Create Input" >> beam.Create(inputs)
-                | PartitionRowsContainingNone()
-            )
+            actual = p | "Create Input" >> beam.Create(inputs) | PartitionRowsContainingNone()
 
-            assert_that(
-                actual[None], pprint_equal_to(expected_default), label="default"
-            )
+            assert_that(actual[None], pprint_equal_to(expected_default), label="default")
             assert_that(
                 actual["contains_none"],
                 pprint_equal_to(expected_contains_none),
