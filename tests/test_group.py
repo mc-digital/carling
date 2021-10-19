@@ -64,19 +64,19 @@ class IntersectionTest(unittest.TestCase):
     def test(self):
 
         input_left = [
-            {"value1": "AAA", "value2": "XXX"},
-            {"value1": "BBB", "value2": "YYY"},
-            {"value1": "001", "value2": "001"},
+            (("value1", "AAA"), ("value2", "XXX")),
+            (("value1", "BBB"), ("value2", "YYY")),
+            (("value1", "001"), ("value2", "001")),
         ]
 
         input_right = [
-            {"value1": "AAA", "value2": "XXX"},
-            {"value1": "CCC", "value2": "ZZZ"},
-            {"value1": "001", "value2": "002"},
+            (("value1", "AAA"), ("value2", "XXX")),
+            (("value1", "CCC"), ("value2", "ZZZ")),
+            (("value1", "001"), ("value2", "002")),
         ]
 
         expected = [
-            {"value1": "AAA", "value2": "XXX"},
+            (("value1", "AAA"), ("value2", "XXX")),
         ]
 
         with TestPipeline() as p:
