@@ -11,6 +11,7 @@ license = "Apache-2.0"
 homepage = "https://github.com/mc-digital/carling"
 repository = "https://github.com/mc-digital/carling"
 readme = "README.md"
+include = ["carling/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
