@@ -5,6 +5,7 @@ on:
     paths:
       - carling/**
       - .github/workflows/ci.yml
+      - poetry.lock
 
 jobs:
   test:
