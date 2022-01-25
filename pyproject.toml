@@ -14,17 +14,17 @@ readme = "README.md"
 include = ["carling/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-apache-beam = "^2.33.0"
-deepdiff = "^5.6.0"
+python = ">=3.7,<3.10"
+apache-beam = "^2.35.0"
+deepdiff = "^5.7.0"
 
 [tool.poetry.dev-dependencies]
-black = "^21.10b0"
+black = "^21.12b0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 pytest = "^6.2.5"
 pytest-watch = "^4.2.0"
-tox = "^3.24.4"
+tox = "^3.24.5"
 
 [tool.black]
 line-length = 99
