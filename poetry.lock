@@ -1,19 +1,20 @@
 [[package]]
 name = "apache-beam"
-version = "2.35.0"
+version = "2.37.0"
 description = "Apache Beam SDK for Python"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
+cloudpickle = ">=2.0.0,<3"
 crcmod = ">=1.7,<2.0"
 dill = ">=0.3.1.1,<0.3.2"
-fastavro = ">=0.21.4,<2"
+fastavro = ">=0.23.6,<2"
 grpcio = ">=1.29.0,<2"
 hdfs = ">=2.1.0,<3.0.0"
 httplib2 = ">=0.8,<0.20.0"
-numpy = ">=1.14.3,<1.21.0"
+numpy = ">=1.14.3,<1.22.0"
 oauth2client = ">=2.0.1,<5"
 orjson = "<4.0"
 proto-plus = ">=1.7.1,<2"
@@ -24,17 +25,17 @@ pymongo = ">=3.8.0,<4.0.0"
 python-dateutil = ">=2.8.0,<3"
 pytz = ">=2018.3"
 requests = ">=2.24.0,<3.0.0"
-typing-extensions = ">=3.7.0,<4"
+typing-extensions = ">=3.7.0"
 
 [package.extras]
 aws = ["boto3 (>=1.9)"]
 azure = ["azure-storage-blob (>=12.3.2)", "azure-core (>=1.7.0)"]
-dataframe = ["pandas (>=1.0,<1.4)"]
+dataframe = ["pandas (>=1.0,<1.5)"]
 docs = ["Sphinx (>=1.5.2,<2.0)", "docutils (==0.17.1)"]
-gcp = ["cachetools (>=3.1.0,<5)", "google-apitools (>=0.5.31,<0.5.32)", "google-auth (>=1.18.0,<3)", "google-cloud-datastore (>=1.8.0,<2)", "google-cloud-pubsub (>=0.39.0,<2)", "google-cloud-bigquery (>=1.6.0,<3)", "google-cloud-bigquery-storage (>=2.6.3)", "google-cloud-core (>=0.28.1,<2)", "google-cloud-bigtable (>=0.31.1,<2)", "google-cloud-spanner (>=1.13.0,<2)", "grpcio-gcp (>=0.2.2,<1)", "google-cloud-dlp (>=3.0.0,<4)", "google-cloud-language (>=1.3.0,<2)", "google-cloud-videointelligence (>=1.8.0,<2)", "google-cloud-vision (>=0.38.0,<2)", "google-cloud-recommendations-ai (>=0.1.0,<=0.2.0)"]
+gcp = ["cachetools (>=3.1.0,<5)", "google-apitools (>=0.5.31,<0.5.32)", "google-auth (>=1.18.0,<3)", "google-cloud-datastore (>=1.8.0,<2)", "google-cloud-pubsub (>=2.1.0,<3)", "google-cloud-pubsublite (>=1.2.0,<2)", "google-cloud-bigquery (>=1.6.0,<3)", "google-cloud-bigquery-storage (>=2.6.3)", "google-cloud-core (>=0.28.1,<2)", "google-cloud-bigtable (>=0.31.1,<2)", "google-cloud-spanner (>=1.13.0,<2)", "grpcio-gcp (>=0.2.2,<1)", "google-cloud-dlp (>=3.0.0,<4)", "google-cloud-language (>=1.3.0,<2)", "google-cloud-videointelligence (>=1.8.0,<2)", "google-cloud-vision (>=0.38.0,<2)", "google-cloud-recommendations-ai (>=0.1.0,<=0.2.0)"]
 interactive = ["facets-overview (>=1.0.0,<2)", "ipython (>=7,<8)", "ipykernel (>=5.2.0,<6)", "ipywidgets (>=7.6.5,<8)", "jupyter-client (>=6.1.11,<6.1.13)", "timeloop (>=1.0.2,<2)"]
-interactive_test = ["nbformat (>=5.0.5,<6)", "nbconvert (>=6.2.0,<7)", "selenium (>=3.141.0,<4)", "needle (>=0.5.0,<1)", "chromedriver-binary (>=93,<94)", "pillow (>=7.1.1,<8)"]
-test = ["freezegun (>=0.3.12)", "mock (>=1.0.1,<3.0.0)", "pandas (<2.0.0)", "parameterized (>=0.7.1,<0.8.0)", "pyhamcrest (>=1.9,!=1.10.0,<2.0.0)", "pyyaml (>=3.12,<7.0.0)", "requests-mock (>=1.7,<2.0)", "tenacity (>=5.0.2,<6.0)", "pytest (>=4.4.0,<5.0)", "pytest-xdist (>=1.29.0,<2)", "pytest-timeout (>=1.3.3,<2)", "sqlalchemy (>=1.3,<2.0)", "psycopg2-binary (>=2.8.5,<3.0.0)", "testcontainers (>=3.0.3,<4.0.0)"]
+interactive_test = ["nbformat (>=5.0.5,<6)", "nbconvert (>=6.2.0,<7)", "needle (>=0.5.0,<1)", "chromedriver-binary (>=96,<97)", "pillow (>=7.1.1,<8)"]
+test = ["freezegun (>=0.3.12)", "mock (>=1.0.1,<3.0.0)", "pandas (<2.0.0)", "parameterized (>=0.7.1,<0.8.0)", "pyhamcrest (>=1.9,!=1.10.0,<2.0.0)", "pyyaml (>=3.12,<7.0.0)", "requests-mock (>=1.7,<2.0)", "tenacity (>=5.0.2,<6.0)", "pytest (>=4.4.0,<5.0)", "pytest-xdist (>=1.29.0,<2)", "pytest-timeout (>=1.3.3,<2)", "sqlalchemy (>=1.3,<2.0)", "psycopg2-binary (>=2.8.5,<3.0.0)", "testcontainers[mysql] (>=3.0.3,<4.0.0)", "cryptography (>=36.0.0)"]
 
 [[package]]
 name = "atomicwrites"
@@ -111,6 +112,14 @@ python-versions = ">=3.6"
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
+
+[[package]]
+name = "cloudpickle"
+version = "2.0.0"
+description = "Extended pickling support for Python objects"
+category = "main"
+optional = false
+python-versions = ">=3.6"
 
 [[package]]
 name = "colorama"
@@ -717,35 +726,43 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.7,<3.10"
-content-hash = "b33031e0aa26cb9f24f3b052f02a0a3a8aeebb97c441a6de80d68562494f47ff"
+content-hash = "5c3888b476132a0d25259f51db4f09bab733c5b015bd0e9d29689234de36413a"
 
 [metadata.files]
 apache-beam = [
-    {file = "apache-beam-2.35.0.zip", hash = "sha256:6121b07d9ce283ee64fef6cb3ccbe884a14caf026e4ad6045d34cda9687a5509"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:42160a16a33328ef42c370c17acf6b2bb3d260c1cfeca9a78aead51450d5a6a1"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:6569dc25e11db9e37975755320f3b91fb49ab7ee28c2d6aa7e4251ade9ffdd5f"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:bfa2cd08a54a778f8cdd2d0e8cec398a46585b8920d076bd07a4da3f00b1b381"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:7d1337c65f884c6a7aae0b9726788ec86339f925be54cecca16087747acda533"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:709939d808516a04e29e7196995639b987f63cacb0cb93ef570b1c95788b458b"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:37762c8bc7deec24464fe5ea272eee1cde13f4ec891ff55d3477fc5b05e1c80e"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-win32.whl", hash = "sha256:6293ec1ba2f1ab2b158936716173d8cdfbd8486e92b06bf1b6601f1e587e2b85"},
-    {file = "apache_beam-2.35.0-cp36-cp36m-win_amd64.whl", hash = "sha256:43ef497710be83bfb13afa264391d3cfc0e4e0c16557ba567f5e3a9ee7f65d39"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:2d4469fe9f19815bc7e98305be20176206de7ac6614bf9a91a78286c500ee72e"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:f973637d76dcefe4713a6fb409d2354b7762055a9d15ffee1128628cfbd81b77"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:f208c3714ace0df029ca5bdba58c6e84e3b2def4b76f9e7f84da89eed2217bee"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:afedb15c99c871f70d181dcd9ffad1dd69a98cb09f02fc52de133a4a34ea98d9"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:15a667f30227c1e68bcbf7bf5c7b6ed01992f00085e4f90c54deba77dba6b198"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:70ecdba0bd47955cfd194afeffd11de5ddedb7414d763fae7204025bc732e45f"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-win32.whl", hash = "sha256:5029576a9c8fe07eec672d53faaf78ae0b7464c2932d472479326ea472b8661a"},
-    {file = "apache_beam-2.35.0-cp37-cp37m-win_amd64.whl", hash = "sha256:48f93115a2975a88db6de90f6a64a669fc6816181b522687d5acbe86c7e7544b"},
-    {file = "apache_beam-2.35.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:0b5890d556172cc6c306da9adbd876a3059d0c6a814ff6bb348f8c287278b740"},
-    {file = "apache_beam-2.35.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:9f7fa143ffae3842828043416cd1619448d7a9b813c97b8ba5e74ff31ebb62eb"},
-    {file = "apache_beam-2.35.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:bb1523acc513d897b5546608bc8f3a8e4bad2428001fa4954b44e790c35896ab"},
-    {file = "apache_beam-2.35.0-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:3ab28b3c213d26ed7e415181120f6d8c30c8430175826bbfed8a6aefd0e80508"},
-    {file = "apache_beam-2.35.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:9b2a99763381b4b762d85a6f927f8484624108196fdd4422bce1b47b4b19656d"},
-    {file = "apache_beam-2.35.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:44c91aa540a5ee44c400a41f8b713fd46d9e6977fadf71b53601f493b9bc81d9"},
-    {file = "apache_beam-2.35.0-cp38-cp38-win32.whl", hash = "sha256:1b86aaf4508e1dd474da13d3d64d206e0c8509b0c2471c82104a0e93781a7dd2"},
-    {file = "apache_beam-2.35.0-cp38-cp38-win_amd64.whl", hash = "sha256:86138dc15c46834120695ef216262d2711e3ee8e5aa9a6d3ea35e91257259e72"},
+    {file = "apache-beam-2.37.0.zip", hash = "sha256:c390f5455ff4f9b2028d2750d818cfc613400365e0b83f7850bf9fcea5cbc8e9"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:ddbba07d45b8612399ebc0e008f294391505771c5197b9e164142d2b14e3b68b"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:3431cdea34495d0accd322a9a912d7df01a5b2367297caf47841dcc47538a01d"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:2330335dff7acbd4802933a889fd15fa1bb6edf734eba3e1eba9dad4ccc6422e"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:8190e9952d023debfa9b2a9c3d9f6f3fd1a3222a705eaff70c9f479e25d11fac"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:18617050e67f259ce9976deaf5481e3d3bccfe4f6b710635152101492e726613"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:a68fef1cc69611a4ab367e2ebeec544aff65c1c0c52361e21931892b16e4c236"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-win32.whl", hash = "sha256:1e2880e69ef99c98750be136744500bfac8c0b3018ee54e487a414d8d8b86cd0"},
+    {file = "apache_beam-2.37.0-cp36-cp36m-win_amd64.whl", hash = "sha256:68ede62b3666da4807a577f1630bc943b78532b0be8424252880e0a554b50939"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:dcb9f3028f17d466cb05a50c40aaaad9e5c425d9a2ae65cee49b1b1e8a5328a2"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:8bf0358b82ccbdd5712e920b0625699a8b500156faedfd76bcac10277e5423df"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:6a01e89ff738a807152308dbfcdb912c29e5396f9e0043c8cfd7c303438a2ba4"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:6d34af2e370de50431cba6e58b6bb175050f7e9649b4004755adec45511dcf31"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:dd82d19fa5efe4f316d90fba517a0bdccf874aaf7e1f208dcef397627370c67a"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:8b24861fc8282d92b6315b141cf5b9435ed136ff1b9dc7ed093f35f3240c35b6"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-win32.whl", hash = "sha256:0c2a8d8609c89a6612d86559a3d54d47022feb0165c2097f40411328a73f88be"},
+    {file = "apache_beam-2.37.0-cp37-cp37m-win_amd64.whl", hash = "sha256:9f54e4b065c5f23239ccfacf2b661eb2b728ecd5032df49c29f28445de4179c6"},
+    {file = "apache_beam-2.37.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:22a9bfd9603167d3a56c55977d2bd1ad4c0da73f8dc92f30e06d465a812a1382"},
+    {file = "apache_beam-2.37.0-cp38-cp38-manylinux1_i686.whl", hash = "sha256:38a6ac07c653bf21839ae3cdb5a0a75ac6a54ab865ee5b698b211b679a551e54"},
+    {file = "apache_beam-2.37.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:1a7ac2ce68b290e134cfd14cc967b47b2cb12b6414f0e4c9332aef64b9ea5b4f"},
+    {file = "apache_beam-2.37.0-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:cb5b8929494bd944df5959ff39f9c0ad58c2d046806118ce9c2fe1292301a120"},
+    {file = "apache_beam-2.37.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:5a92d4633a81ae181a24cf944038f61e17c4c5697eca77e0d6830053c30c94d0"},
+    {file = "apache_beam-2.37.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:1888a10e949ef66ad7fe916deaa555d7bc8a7f827ca5e97703be777278f9b3cb"},
+    {file = "apache_beam-2.37.0-cp38-cp38-win32.whl", hash = "sha256:87c789d4f3f36d1e2624f2b93ab5688c04739c320ca4a4abfc20810445e3cc99"},
+    {file = "apache_beam-2.37.0-cp38-cp38-win_amd64.whl", hash = "sha256:b7e8c20b75b9f822a087e3e2cffd993a86280e733eb9bc0350a62586e0c40df0"},
+    {file = "apache_beam-2.37.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:5a877f17b82defb3feb593e079b80e4a15f62a81839da83b08c490d97337aafd"},
+    {file = "apache_beam-2.37.0-cp39-cp39-manylinux1_i686.whl", hash = "sha256:786df5176785198e4728bdf388f5674dae99af4c83e19e74a732ca60cf5d1f7d"},
+    {file = "apache_beam-2.37.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:820962c25438c693f4eaa51063825ef039524f43fccf99dcfe558204367b4aa6"},
+    {file = "apache_beam-2.37.0-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:779d9390a999d90cdc03ed235f6d72072e70b5ab5fc44aa2231d7b81149de535"},
+    {file = "apache_beam-2.37.0-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:a107210938321ff749beaeee7a364500ab9c19391c59fe6695436c16bf947d73"},
+    {file = "apache_beam-2.37.0-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:c59a821195479bba2b287fa30d0c77385f38079ebe8ec3c820327f84cee46a8c"},
+    {file = "apache_beam-2.37.0-cp39-cp39-win32.whl", hash = "sha256:cf06fd6785d8e0722e74306dfc780931df3f9da94979ae028909456dc13b143a"},
+    {file = "apache_beam-2.37.0-cp39-cp39-win_amd64.whl", hash = "sha256:a610d0087ab11c2ba1a9d06a6a8932f929084cef24a7bd1bd4ca622feff22bf1"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -791,6 +808,10 @@ charset-normalizer = [
 click = [
     {file = "click-8.0.3-py3-none-any.whl", hash = "sha256:353f466495adaeb40b6b5f592f9f91cb22372351c84caeb068132442a4518ef3"},
     {file = "click-8.0.3.tar.gz", hash = "sha256:410e932b050f5eed773c4cda94de75971c89cdb3155a72a0831139a79e5ecb5b"},
+]
+cloudpickle = [
+    {file = "cloudpickle-2.0.0-py3-none-any.whl", hash = "sha256:6b2df9741d06f43839a3275c4e6632f7df6487a1f181f5f46a052d3c917c3d11"},
+    {file = "cloudpickle-2.0.0.tar.gz", hash = "sha256:5cd02f3b417a783ba84a4ec3e290ff7929009fe51f6405423cfccfadd43ba4a4"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
