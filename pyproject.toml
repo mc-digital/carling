@@ -15,7 +15,7 @@ include = ["carling/py.typed"]
 
 [tool.poetry.dependencies]
 python = ">=3.7,<3.10"
-apache-beam = "^2.37.0"
+apache-beam = "^2.39.0"
 deepdiff = "^5.7.0"
 
 [tool.poetry.dev-dependencies]
