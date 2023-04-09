@@ -6,6 +6,7 @@ on:
       - carling/**
       - .github/workflows/ci.yml
       - poetry.lock
+      - tox.ini
 
 jobs:
   test:
