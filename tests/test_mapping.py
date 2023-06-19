@@ -10,7 +10,6 @@ from carling import Exclude, Label, RenameFromTo
 
 class RenameTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"value1": "001", "valueX": "AAA"},
         ]
@@ -26,7 +25,6 @@ class RenameTest(unittest.TestCase):
 
 class LabelTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"value1": "001", "valueX": "AAA"},
         ]
@@ -42,7 +40,6 @@ class LabelTest(unittest.TestCase):
 
 class ExcludeTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"value1": "001", "valueX": "AAA"},
         ]

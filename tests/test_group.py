@@ -21,7 +21,6 @@ from carling.test_utils import pprint_equal_to
 
 class UniqueOnlyTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"key": "001", "value": "AAA"},
             {"key": "002", "value": "BBB"},
@@ -42,7 +41,6 @@ class UniqueOnlyTest(unittest.TestCase):
 
 class SingletonOnlyTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"key": "001", "value": "AAA"},
             {"key": "002", "value": "BBB"},
@@ -62,7 +60,6 @@ class SingletonOnlyTest(unittest.TestCase):
 
 class IntersectionTest(unittest.TestCase):
     def test(self):
-
         input_left = [
             (("value1", "AAA"), ("value2", "XXX")),
             (("value1", "BBB"), ("value2", "YYY")),
@@ -89,7 +86,6 @@ class IntersectionTest(unittest.TestCase):
 
 class FilterByKeyTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"key": "001", "value": "A"},
             {"key": "002", "value": "A"},
@@ -133,7 +129,6 @@ class FilterByKeyTest(unittest.TestCase):
 
 class FilterByKeyUsingSideInputTest(unittest.TestCase):
     def test(self):
-
         filter_table = [
             {"a": 1, "b": 99991},
             {"a": 2, "b": 99992},
@@ -158,7 +153,6 @@ class FilterByKeyUsingSideInputTest(unittest.TestCase):
 
 class DifferencePerKeyTest(unittest.TestCase):
     def _check(self, left_inputs, right_inputs, expected, keys=["key"], columns=["value"]):
-
         excluded = ["detail"]
 
         def filter_extra_info(row):
@@ -172,7 +166,6 @@ class DifferencePerKeyTest(unittest.TestCase):
             assert_that(actual, pprint_equal_to(expected))
 
     def test_plain_diff(self):
-
         left_inputs = [
             {"key": "a", "value": 1},
             {"key": "b", "value": 2},
@@ -197,7 +190,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_type_mismatch(self):
-
         left_inputs = [{"key": "a", "value": 1}]
         right_inputs = [{"key": "a", "value": 1.0}]
         expected = [
@@ -216,7 +208,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_array(self):
-
         left_inputs = [
             {"key": "a", "value": [1, 2, 3]},
             {"key": "b", "value": [1, 2, 3]},
@@ -254,7 +245,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_dict(self):
-
         left_inputs = [
             {"key": "a", "value": {"x": "X"}},
             {"key": "b", "value": {"x": "X"}},
@@ -287,7 +277,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_nested(self):
-
         left_inputs = [{"key": "a", "value": {"lv1": {"lv2": [{"lv3": [1]}]}}}]
         right_inputs = [{"key": "a", "value": {"lv1": {"lv2": [{"lv3": [2]}]}}}]
         expected = [
@@ -306,7 +295,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_specified_column_only(self):
-
         left_inputs = [
             {"key": "a", "value1": 1, "value2": 1},
             {"key": "b", "value1": 2, "value2": 2},
@@ -333,7 +321,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected, columns=["value1"])
 
     def test_missing_value(self):
-
         left_inputs = [{"key": "a", "value": 1}]
         right_inputs = []
         expected = [
@@ -347,7 +334,6 @@ class DifferencePerKeyTest(unittest.TestCase):
         self._check(left_inputs, right_inputs, expected)
 
     def test_key_conflict(self):
-
         left_inputs = [
             {"key": "a", "value1": 1, "value2": 1},
             {"key": "a", "value1": 2, "value2": 2},
@@ -367,7 +353,6 @@ class DifferencePerKeyTest(unittest.TestCase):
 
 
 class MaxSelectByKeyTest(unittest.TestCase):
-
     inputs = [
         {"a": 1, "b": 1, "c": 1},
         {"a": 1, "b": 1, "c": 2},
@@ -381,7 +366,6 @@ class MaxSelectByKeyTest(unittest.TestCase):
     ]
 
     def test_max_select(self):
-
         expected = [
             {"a": 1, "b": 1, "c": 3},
             {"a": 2, "b": 1, "c": 3},
@@ -397,7 +381,6 @@ class MaxSelectByKeyTest(unittest.TestCase):
             assert_that(actual, pprint_equal_to(expected))
 
     def test_max_select_reverse(self):
-
         expected = [
             {"a": 1, "b": 1, "c": 1},
             {"a": 2, "b": 1, "c": 1},
@@ -415,7 +398,6 @@ class MaxSelectByKeyTest(unittest.TestCase):
 
 class PartitionRowsContainingNoneTest(unittest.TestCase):
     def test_null_separation(self):
-
         inputs = [
             {"a": 1, "b": 1, "c": 1},
             {"a": None, "b": 1, "c": 1},

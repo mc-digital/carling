@@ -87,7 +87,6 @@ class SingletonOnly(beam.PTransform):
 
 class _IntersectionDoFn(beam.DoFn):
     def process(self, row):
-
         key, iter_list = row
         iter_list = list(iter_list)
 
@@ -123,7 +122,6 @@ class Intersection(beam.PTransform):
 
 class _FilterByKeyDoFn(beam.DoFn):
     def process(self, row):
-
         _, value_list = row
         value_list = list(value_list)
         head_iter, tail_iters = value_list[0], value_list[1:]
@@ -204,7 +202,6 @@ def _compare(left, right, tag, dict_keys=None):
         }
 
     if isinstance(left, list):
-
         if len(left) != len(right):
             return {
                 "tag": tag,
@@ -218,7 +215,6 @@ def _compare(left, right, tag, dict_keys=None):
                 return diff
 
     elif isinstance(left, dict):
-
         keys = set(left.keys()) | set(right.keys())
 
         if dict_keys is not None:
@@ -234,7 +230,6 @@ def _compare(left, right, tag, dict_keys=None):
             if diff is not None:
                 return diff
     else:
-
         if left != right:
             return {
                 "tag": tag,
@@ -252,7 +247,6 @@ class _DifferencePerKeyDoFn(beam.DoFn):
         self._columns = columns
 
     def process(self, row):
-
         key, value_dict = row
         left_iter = iter(value_dict["left"])
         right_iter = iter(value_dict["right"])

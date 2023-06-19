@@ -29,7 +29,6 @@ def pprint_equal_to(expected, deepdiff=False):
     """
 
     def _equal(actual):
-
         expected_list = list(expected)
 
         # Try to compare actual and expected by sorting. This fails with a

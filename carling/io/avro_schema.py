@@ -8,14 +8,12 @@ def load_avro_schema(template_path):
 
 
 def _fill_template_schema(template, var_name, var_values):
-
     template_fields = template["fields"]
     fields = []
 
     var_name_in_parentheses = "{" + var_name + "}"
 
     for f in template_fields:
-
         if var_name_in_parentheses not in f["name"]:
             fields.append(f)
             continue

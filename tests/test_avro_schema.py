@@ -6,7 +6,6 @@ from carling.io.avro_schema import _fill_template_schema
 
 class TemplateSchemaTest(unittest.TestCase):
     def test(self):
-
         template_schema = {
             "name": "root",
             "type": "records",

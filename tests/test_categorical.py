@@ -16,7 +16,6 @@ from carling.test_utils import pprint_equal_to
 
 class PairWithIndexNumberTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             "AAA",
             "BBB",
@@ -42,7 +41,6 @@ class PairWithIndexNumberTest(unittest.TestCase):
 
 class DigestCategoricalColumnsTest(unittest.TestCase):
     def test(self):
-
         inputs = [
             {"key": 1, "value1": "A", "value2": "X"},
             {"key": 2, "value1": "A", "value2": "Y"},
@@ -93,7 +91,6 @@ inputs_raw_nested = [
 
 class ReplaceCategoricalColumnsTest(unittest.TestCase):
     def test_use(self):
-
         expected = [
             # fmt: off
             # Seen values
@@ -117,7 +114,6 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
             assert_that(actual, pprint_equal_to(expected, deepdiff=True))
 
     def test_use_with_default_unseen(self):
-
         expected = [
             # Seen values
             {"key": 1, "column1": 10, "column2": 2, "column3": 0, "column4": "O"},
@@ -141,7 +137,6 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
             assert_that(actual, pprint_equal_to(expected, deepdiff=True))
 
     def test_use_with_nesting(self):
-
         expected = [
             {"untouched": "untouched", "features": {"column1": 10}},
             {"untouched": "untouched", "features": {"column1": None}},
@@ -161,7 +156,6 @@ class ReplaceCategoricalColumnsTest(unittest.TestCase):
 
 class DigestCategoricalColumnsExistingTest(unittest.TestCase):
     def test_creation(self):
-
         expected = [
             # Column 1
             ("column1", "A", 10),
@@ -191,7 +185,6 @@ class DigestCategoricalColumnsExistingTest(unittest.TestCase):
             )
 
     def test_use(self):
-
         expected = [
             # Seen values
             {"key": 1, "column1": 10, "column2": 2, "column3": 1, "column4": "O"},
