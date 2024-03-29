@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "carling"
-version = "0.3.5"
+version = "0.4.0"
 description = "Useful transforms for supporting apache beam pipelines."
 authors = [
     "Adam Moore <adam@mcdigital.jp>",
