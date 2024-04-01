@@ -24,7 +24,7 @@ flake8 = "^5.0.4"
 isort = "^5.11.5"
 pytest = "^7.4.4"
 pytest-watch = "^4.2.0"
-tox = "^3.28.0"
+tox = "^4.14.2"
 
 [tool.black]
 line-length = 99
