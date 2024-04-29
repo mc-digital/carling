@@ -19,7 +19,7 @@ apache-beam = "^2.49.0"
 deepdiff = ">=5.7,<7.0"
 
 [tool.poetry.dev-dependencies]
-black = "^23.3"
+black = "^24.4"
 flake8 = "^5.0.4"
 isort = "^5.11.5"
 pytest = "^7.4.4"
